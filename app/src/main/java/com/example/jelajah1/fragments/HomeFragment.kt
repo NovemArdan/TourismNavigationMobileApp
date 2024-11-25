@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.jelajah1.activities.CategoryMealsActivity
 import com.example.jelajah1.activities.MealActivity
 import com.example.jelajah1.adapters.CategoriesAdapter
 import com.example.jelajah1.adapters.MostPopularAdapter
@@ -32,9 +33,10 @@ class HomeFragment : Fragment() {
     private lateinit var randomMeal: Meal
 
     companion object {
-        const val MEAL_ID = "com.example.easyfood.fragments.idMeal"
-        const val MEAL_NAME = "com.example.easyfood.fragments.nameMeal"
-        const val MEAL_THUMB = "com.example.easyfood.fragments.thumbMeal"
+        const val MEAL_ID = "com.example.jelajah1.fragments.idMeal"
+        const val MEAL_NAME = "com.example.jelajah1.fragments.nameMeal"
+        const val MEAL_THUMB = "com.example.jelajah1.fragments.thumbMeal"
+        const val CATEGORY_NAME = "com.example.jelajah1.fragments.categoryName"
     }
 
 
@@ -83,10 +85,20 @@ class HomeFragment : Fragment() {
 
         prepareCategoriesRecyclerView()
 
+        onCategoryClick()
+
         // Click listener for random meal card
         onRandomMealClick()
 
         onPopularItemClick()
+    }
+
+    private fun onCategoryClick() {
+        categoriesAdapter.onItemClick = { category ->
+            val intent = Intent(activity, CategoryMealsActivity::class.java)
+            intent.putExtra(CATEGORY_NAME, category.strCategory)
+            startActivity(intent)
+        }
     }
 
     private fun prepareCategoriesRecyclerView() {
